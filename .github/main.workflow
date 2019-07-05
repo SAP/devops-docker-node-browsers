@@ -9,5 +9,5 @@ action "Haskell Dockerfile Linter" {
   # https://github.com/hadolint/hadolint/wiki/DL3013
   # https://github.com/hadolint/hadolint/wiki/DL3016
   # https://github.com/hadolint/hadolint/wiki/DL3018
-  args = "--ignore DL3008 --ignore DL3013 --ignore DL3016 --ignore DL3018"
+  args = "--ignore DL3008 --ignore DL3013 --ignore DL3016 --ignore DL3018 --ignore DL3015"
 }
