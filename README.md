@@ -1,4 +1,16 @@
-# Node Browsers
+# Node Browsers Image
+
+The CX Server is a collection of [_Dockerfiles_](https://docs.docker.com/engine/reference/builder/) for images that can be used in _Continuous Delivery_ (CD) pipelines for SAP development projects.
+The images are optimized for use with project ["Piper"](https://github.com/SAP/jenkins-library) on [Jenkins](https://jenkins.io/).
+Docker containers simplify your CD tool setup, encapsulating tools and environments that are required to execute pipeline steps.
+
+If you want to learn how to use project "Piper" please have a look at [the documentation](https://github.com/SAP/jenkins-library/blob/master/README.md).
+Introductory material and a lot of SAP scenarios not covered by project "Piper" are described in our [Continuous Integration Best Practices](https://developers.sap.com/tutorials/ci-best-practices-intro.html).
+
+This repository contains Dockerfiles that are designed to run project "Piper" pipelines.
+Nevertheless, they can also be used flexibly in any custom environment and automation process.
+
+## About this repository
 
 Dockerfile for an image with node and web browsers.
 This image is intended to be used for end to end tests of web applications in Jenkins pipelines.
