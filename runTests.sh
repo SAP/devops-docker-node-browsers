@@ -13,7 +13,7 @@ pushd test-project
 docker run -v //var/run/docker.sock:/var/run/docker.sock -v $(pwd):/workspace -v /tmp \
  -e BRANCH_NAME=master \
  -e CASC_JENKINS_CONFIG=/workspace/jenkins.yml -e HOST=$(hostname) \
- ppiper/jenkinsfile-runner
+ ppiper/jenkinsfile-runner:latest-plugins
 
 popd
 
