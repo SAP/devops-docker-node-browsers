@@ -1,6 +1,6 @@
 # Node Browsers Image
 
-This [_Dockerfile_](https://docs.docker.com/engine/reference/builder/) can be used in _Continuous Delivery_ (CD) pipelines for SAP development projects. 
+This [_Dockerfile_](https://docs.docker.com/engine/reference/builder/) can be used in _Continuous Delivery_ (CD) pipelines for SAP development projects.
 The image is optimized for use with project ["Piper"](https://github.com/SAP/jenkins-library) on [Jenkins](https://jenkins.io/).
 Docker containers simplify your CD tool setup, encapsulating tools and environments that are required to execute pipeline steps.
 
@@ -18,6 +18,14 @@ This image is published to Docker Hub and can be pulled via the command
 
 ```
 docker pull ppiper/node-browsers
+```
+
+The default tag contains node 10 due to compatibility reasons with approuter.
+
+For node 12, use the tag `node12`:
+
+```
+docker pull ppiper/node-browsers:node12
 ```
 
 ## Build
