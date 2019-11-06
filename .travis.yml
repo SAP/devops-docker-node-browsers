@@ -5,4 +5,4 @@ branches:
 language: minimal
 services:
 - docker
-script: chmod +x runTests.sh && ./runTests.sh
+script: chmod +x runTests.sh && ./runTests.sh . && ./runTests.sh node12
