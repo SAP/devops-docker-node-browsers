@@ -2,7 +2,7 @@
 FROM node:10-stretch
 
 RUN apt-get update && \
-    apt-get install -y chromium=70.0.3538.110-1~deb9u1 firefox-esr xvfb libxi6 libgconf-2-4 default-jre && \
+    apt-get install -y chromium=70.0.3538.110-1~deb9u1 firefox-esr xvfb libxi6 libgconf-2-4 openjdk11 && \
     rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
 RUN ln -s /usr/bin/chromium /usr/bin/google-chrome
