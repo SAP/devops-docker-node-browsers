@@ -1,9 +1,7 @@
-FROM node:12-stretch
+FROM node:12-buster
 
 RUN apt-get update && \
-    apt-get install -y software-properties-common && \
-    add-apt-repository ppa:openjdk-r/ppa && \
-    apt-get install -y chromium firefox-esr xvfb libxi6 libgconf-2-4 openjdk11 && \
+    apt-get install -y chromium firefox-esr xvfb libxi6 libgconf-2-4 openjdk-11-jdk && \
     rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
 RUN ln -s /usr/bin/chromium /usr/bin/google-chrome
