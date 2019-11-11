@@ -1,7 +1,8 @@
 FROM node:12-stretch
 
-RUN add-apt-repository ppa:openjdk-r/ppa && \
-    apt-get update && \
+RUN apt-get update && \
+    apt-get install software-properties-common && \
+    add-apt-repository ppa:openjdk-r/ppa && \
     apt-get install -y chromium firefox-esr xvfb libxi6 libgconf-2-4 openjdk-11-jdk && \
     rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
