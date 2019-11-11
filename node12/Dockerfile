@@ -1,6 +1,7 @@
 FROM node:12-stretch
 
-RUN apt-get update && \
+RUN add-apt-repository ppa:openjdk-r/ppa && \
+    apt-get update && \
     apt-get install -y chromium firefox-esr xvfb libxi6 libgconf-2-4 openjdk-11-jdk && \
     rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
