@@ -1,9 +1,8 @@
 # node-10 is LTS and required for sap approuter. EOL: 2021-04-01
 FROM node:10-stretch
 
-RUN apt-get install software-properties-common && \
+RUN add-apt-repository ppa:openjdk-r/ppa && \
     apt-get update && \
-    add-apt-repository ppa:openjdk-r/ppa && \
     apt-get install -y chromium=70.0.3538.110-1~deb9u1 firefox-esr xvfb libxi6 libgconf-2-4 openjdk-11-jdk && \
     rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
