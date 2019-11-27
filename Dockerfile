@@ -10,6 +10,6 @@ RUN ln -s /usr/bin/chromium /usr/bin/google-chrome
 RUN npm config set @sap:registry https://npm.sap.com --global
 
 # Workaround for https://npm.sap.com issue with open SSL in Debian Buster
-RUN sed -i 's/SECLEVEL=2/SECLEVEL=1/g' /etc/ssl/openssl.cnf
+RUN CIPHERS="$(openssl ciphers)" && sed -i "s/DEFAULT@SECLEVEL=2/$CIPHERS:DH-RSA-AES256-SHA256/g" /etc/ssl/openssl.cnf
 
 USER node
