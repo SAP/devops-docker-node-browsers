@@ -2,7 +2,7 @@
 FROM node:10-buster
 
 RUN apt-get update && \
-    apt-get install -y chromium=79.0.3945.130-1~deb10u1 firefox-esr=68.4.1esr-1~deb10u1 xvfb libxi6 libgconf-2-4 openjdk-11-jre && \
+    apt-get install -y chromium=79.0.3945.130-1~deb10u1 libgbm1 firefox-esr=68.4.1esr-1~deb10u1 xvfb libxi6 libgconf-2-4 openjdk-11-jre && \
     rm -rf /var/lib/apt/lists/* /var/cache/apt/* && \ 
     ln -s /usr/bin/chromium /usr/bin/google-chrome && \
     npm config set @sap:registry https://npm.sap.com --global
