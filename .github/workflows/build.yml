@@ -16,6 +16,9 @@ jobs:
         base-image: [10-buster, 12-buster, 14-buster]
     steps:
     - uses: actions/checkout@master
+    - name: Test
+      run: |
+        chmod +x runTests.sh && ./runTests.sh ${{ matrix.base-image }}
     - name: Build
       run: |
         echo ${{ secrets.DH_PW }} | docker login -u ${{ secrets.DH_USER }} --password-stdin

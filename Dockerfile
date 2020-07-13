@@ -1,4 +1,3 @@
-# node-10 is LTS and required for sap approuter. EOL: 2021-04-01
 ARG BASE_IMAGE
 
 FROM $BASE_IMAGE

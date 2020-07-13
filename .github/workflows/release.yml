@@ -15,6 +15,9 @@ jobs:
         base-image: [10-buster, 12-buster, 14-buster]
     steps:
       - uses: actions/checkout@v1
+      - name: Test
+        run: |
+          chmod +x runTests.sh && ./runTests.sh ${{ matrix.base-image }}
       - name: Prepare Release
         run: |
           CURRENT_VERSION_LONG=$(curl --silent "https://api.github.com/repos/SAP/devops-docker-node-browsers/releases" | jq -r '.[].tag_name' | head -n1)
