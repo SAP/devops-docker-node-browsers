@@ -22,10 +22,11 @@ docker pull ppiper/node-browsers
 
 The default tag contains node 10 due to compatibility reasons with approuter.
 
-For node 12, use the tag `node12`:
+For node 12 or node 14, use the tag `12-buster` or `14-buster`:
 
 ```
-docker pull ppiper/node-browsers:node12
+docker pull ppiper/node-browsers:12-buster
+docker pull ppiper/node-browsers:14-buster
 ```
 
 ## Build

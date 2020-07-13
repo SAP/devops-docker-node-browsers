@@ -1,12 +1,12 @@
 #!/bin/bash -ex
 
-DOCKERFILE_PATH=${1:-.}
+TAG=${1:-.}
 
 # Start a local registry, to which we push the images built in this test, and from which they will be consumed in the test
 docker run -d -p 5000:5000 --restart always --name registry registry:2 || true
 
-docker build -t localhost:5000/ppiper/node-browsers:latest ${DOCKERFILE_PATH}
-docker tag localhost:5000/ppiper/node-browsers:latest ppiper/node-browsers:latest
+docker build --build-arg=BASE_IMAGE=node:${TAG} -t localhost:5000/ppiper/node-browsers:${TAG} .
+docker tag localhost:5000/ppiper/node-browsers:latest ppiper/node-browsers:${TAG}
 docker push localhost:5000/ppiper/node-browsers:latest
 
 git clone https://github.com/piper-validation/cloud-s4-sdk-book.git -b validate-node-browsers test-project

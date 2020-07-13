@@ -3,7 +3,7 @@ name: Build images and push (on master branch or on schedule)
 on:
   push:
     branches:
-      - master
+      - "**"
   schedule:
     - cron:  '0 0 * * 0'
   workflow_dispatch:
@@ -11,12 +11,22 @@ on:
 jobs:
   push:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        base-image: [10-buster, 12-buster, 14-buster]
     steps:
     - uses: actions/checkout@master
-    - name: Run CI
+    - name: Build
       run: |
         echo ${{ secrets.DH_PW }} | docker login -u ${{ secrets.DH_USER }} --password-stdin
-        docker build -t ppiper/node-browsers:latest .
-        docker build -t ppiper/node-browsers:node12 node12
-        docker push ppiper/node-browsers:latest
-        docker push ppiper/node-browsers:node12
+        docker build --build-arg=BASE_IMAGE=node:${{ matrix.base-image }} --tag ppiper/node-browsers:${{ matrix.base-image }} .
+        if [ "${{ matrix.base-image }}" == 10-buster ]; then
+          docker tag ppiper/node-browsers:10-buster ppiper/node-browsers:latest
+        fi
+    - name: Push
+      if: ${{ github.ref == 'ref/head/master' }}
+      run: |
+        docker push ppiper/node-browsers:${{ matrix.base-image }}
+        if [ "${{ matrix.base-image }}" == 10-buster ]; then
+          docker push ppiper/node-browsers:latest
+        fi
