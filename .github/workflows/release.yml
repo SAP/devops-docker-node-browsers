@@ -29,10 +29,10 @@ jobs:
       - name: Build, test and push
         run: |
           echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USER }} --password-stdin
-          docker build -t ppiper/node-browsers:${{ PIPER_version }} .
-          docker build -t ppiper/node-browsers:${{ PIPER_version }}-node12 node12
-          docker push ppiper/node-browsers:${{ PIPER_version }}
-          docker push ppiper/node-browsers:${{ PIPER_version }}-node12
+          docker build -t ppiper/node-browsers:${{ env.PIPER_version }} .
+          docker build -t ppiper/node-browsers:${{ env.PIPER_version }}-node12 node12
+          docker push ppiper/node-browsers:${{ env.PIPER_version }}
+          docker push ppiper/node-browsers:${{ env.PIPER_version }}-node12
 
       - uses: SAP/project-piper-action@master
         with:
