@@ -1,0 +1,41 @@
+name: Create new monthly Release (automated)
+
+on:
+  repository_dispatch:
+    types: perform-release
+  schedule:
+    - cron:  '0 0 1 * *'
+  workflow_dispatch:
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Prepare Release
+        run: |
+          CURRENT_VERSION_LONG=$(curl --silent "https://api.github.com/repos/SAP/devops-docker-node-browsers/releases" | jq -r '.[].tag_name' | head -n1)
+          echo Current version: $CURRENT_VERSION_LONG
+          CURRENT_VERSION=`echo $CURRENT_VERSION_LONG | cut -c 2- | cut -d. -f1`
+          NEXT_VERSION=v$(expr $CURRENT_VERSION + 1)
+          echo Next version: $NEXT_VERSION
+          STATUS_CODE_FOR_NEXT_RELEASE=$(curl -s -o /dev/null -w "%{http_code}" "https://api.github.com/repos/SAP/devops-docker-node-browsers/releases/tags/$NEXT_VERSION")
+          if [ "$STATUS_CODE_FOR_NEXT_RELEASE" != "404" ]; then
+            echo "Planned next release version ($NEXT_VERSION) already exists, aborting process"
+            exit 1
+          fi
+          echo "::set-env name=PIPER_version::$NEXT_VERSION"
+
+      - name: Build, test and push
+        run: |
+          echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USER }} --password-stdin
+          docker build -t ppiper/node-browsers:${{ PIPER_version }} .
+          docker build -t ppiper/node-browsers:${{ PIPER_version }}-node12 node12
+          docker push ppiper/node-browsers:${{ PIPER_version }}
+          docker push ppiper/node-browsers:${{ PIPER_version }}-node12
+
+      - uses: SAP/project-piper-action@master
+        with:
+          piper-version: latest
+          command: githubPublishRelease
+          flags: --token ${{ secrets.GITHUB_TOKEN }}
