@@ -1,0 +1,12 @@
+steps:
+  githubPublishRelease:
+    addClosedIssues: true
+    addDeltaToLastRelease: true
+    excludeLabels:
+      - 'discussion'
+      - 'duplicate'
+      - 'invalid'
+      - 'question'
+      - 'wontfix'
+    owner: 'SAP'
+    repository: 'devops-docker-node-browsers'
