@@ -1,5 +1,7 @@
 # node-10 is LTS and required for sap approuter. EOL: 2021-04-01
-FROM node:10-buster
+ARG BASE_IMAGE
+
+FROM $BASE_IMAGE
 
 RUN apt-get update && \
     apt-get install -y chromium firefox-esr xvfb libxi6 libgbm1 libgconf-2-4 openjdk-11-jre && \
