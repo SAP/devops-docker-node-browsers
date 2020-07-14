@@ -20,7 +20,7 @@ This image is published to Docker Hub and can be pulled via the command
 docker pull ppiper/node-browsers
 ```
 
-The default tag `latest` contains node 10 compatibility reasons with approuter, it is which is a Maintenance LTS and will be end of life after 2021-04-30.
+The default tag `latest` contains node 10 for compatibility reasons with approuter, which is a Maintenance LTS and will be end of life after 2021-04-30.
 
 For node-12 or node-14, use the tag `12-buster` or `14-buster`:
 
