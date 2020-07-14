@@ -24,7 +24,7 @@ jobs:
         docker build --build-arg=BASE_IMAGE_TAG=${{ matrix.base-image-tag }} --tag ppiper/node-browsers:${{ matrix.base-image-tag }} .
     - name: Tag latest image
       if: ${{ matrix.base-image-tag == 10-buster }}
-      run: docker tag ppiper/node-browsers:10-buster ppiper/node-browsers:latest
+      run: docker tag ppiper/node-browsers:${{ matrix.base-image-tag }} ppiper/node-browsers:latest
     - name: Push
       if: ${{ github.ref == 'ref/head/master' }}
       run: |
