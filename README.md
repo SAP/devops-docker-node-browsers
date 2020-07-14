@@ -34,10 +34,11 @@ docker pull ppiper/node-browsers:14-buster
 To build this image locally, open a terminal in the directory of the Dockerfile and run
 
 ```
-docker build --build-arg=BASE_IMAGE=node:10-buster -t ppiper/node-browsers .
+docker build --build-arg=BASE_IMAGE_TAG=10-buster -t ppiper/node-browsers .
 ```
 
-Where the `BASE_IMAGE` build argument can be replaced with `node:12-buster` or `node:14-buster`.
+Where the `BASE_IMAGE_TAG` build argument can be replaced with `12-buster` or `14-buster`.
+The given tag **must** exist in the [node](https://hub.docker.com/_/node) base image **and** use Debian GNU/Linux.
 
 ## Usage
 

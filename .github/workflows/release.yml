@@ -35,7 +35,7 @@ jobs:
       - name: Build and push
         run: |
           echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USER }} --password-stdin
-          docker build --build-arg=BASE_IMAGE=node:${{ matrix.base-image-tag }} --tag ppiper/node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image-tag }} .
+          docker build --build-arg=BASE_IMAGE_TAG=${{ matrix.base-image-tag }} --tag ppiper/node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image-tag }} .
           docker push ppiper/node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image-tag }}
       - name: Tag and push node 10 image
         if: ${{ matrix.base-image-tag == 10-buster }}

@@ -1,6 +1,6 @@
-ARG BASE_IMAGE
+ARG BASE_IMAGE_TAG
 
-FROM $BASE_IMAGE
+FROM node:$BASE_IMAGE_TAG
 
 RUN apt-get update && \
     apt-get install -y chromium firefox-esr xvfb libxi6 libgbm1 libgconf-2-4 openjdk-11-jre && \

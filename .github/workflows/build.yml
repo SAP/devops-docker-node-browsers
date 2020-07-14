@@ -21,7 +21,7 @@ jobs:
         chmod +x runTests.sh && ./runTests.sh ${{ matrix.base-image-tag }}
     - name: Build
       run: |
-        docker build --build-arg=BASE_IMAGE=node:${{ matrix.base-image-tag }} --tag ppiper/node-browsers:${{ matrix.base-image-tag }} .
+        docker build --build-arg=BASE_IMAGE_TAG=${{ matrix.base-image-tag }} --tag ppiper/node-browsers:${{ matrix.base-image-tag }} .
     - name: Tag latest image
       if: ${{ matrix.base-image-tag == 10-buster }}
       run: docker tag ppiper/node-browsers:10-buster ppiper/node-browsers:latest
