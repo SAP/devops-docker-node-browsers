@@ -21,7 +21,7 @@ jobs:
         chmod +x runTests.sh && ./runTests.sh ${{ matrix.base-image }}
     - name: Build
       run: |
-        echo ${{ secrets.DH_PW }} | docker login -u ${{ secrets.DH_USER }} --password-stdin
+        echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USER }} --password-stdin
         docker build --build-arg=BASE_IMAGE=node:${{ matrix.base-image }} --tag ppiper/node-browsers:${{ matrix.base-image }} .
         if [ "${{ matrix.base-image }}" == 10-buster ]; then
           docker tag ppiper/node-browsers:10-buster ppiper/node-browsers:latest

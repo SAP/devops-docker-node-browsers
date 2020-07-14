@@ -20,9 +20,7 @@ This image is published to Docker Hub and can be pulled via the command
 docker pull ppiper/node-browsers
 ```
 
-The default tag contains node 10 due to compatibility reasons with approuter.
-
-NOTE: node-10 is LTS and required for sap approuter. EOL: 2021-04-01
+The default tag contains node 10 due to compatibility reasons with approuter, it is EOL: 2021-04-01
 
 For node 12 or node 14, use the tag `12-buster` or `14-buster`:
 
@@ -36,8 +34,10 @@ docker pull ppiper/node-browsers:14-buster
 To build this image locally, open a terminal in the directory of the Dockerfile and run
 
 ```
-docker build -t ppiper/node-browsers .
+docker build --build-arg=BASE_IMAGE=node:10-buster -t ppiper/node-browsers .
 ```
+
+Where the `BASE_IMAGE` build argument can be replaced with `node:12-buster` or `node:14-buster`.
 
 ## Usage
 

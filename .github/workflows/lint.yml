@@ -13,4 +13,5 @@ jobs:
         # https://github.com/hadolint/hadolint/wiki/DL3016
         # https://github.com/hadolint/hadolint/wiki/DL3018
         # https://github.com/hadolint/hadolint/wiki/DL3015
+        # https://github.com/hadolint/hadolint/wiki/DL3006 Make it work to build multiple node versions in one dockerfile via matrix build
         args: --ignore DL3008 --ignore DL3013 --ignore DL3016 --ignore DL3018 --ignore DL3015 --ignore DL3006

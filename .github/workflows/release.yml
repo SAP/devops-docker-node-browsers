@@ -34,7 +34,7 @@ jobs:
 
       - name: Build, test and push
         run: |
-          echo ${{ secrets.DH_PW }} | docker login -u ${{ secrets.DH_USER }} --password-stdin
+          echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USER }} --password-stdin
           docker build --build-arg=BASE_IMAGE=node:${{ matrix.base-image }} --tag ppiper/node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image }} .
           docker push ppiper/node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image }}
           if [ "${{ matrix.base-image }}" == 10-buster ]; then
