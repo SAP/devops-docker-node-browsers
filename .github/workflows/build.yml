@@ -13,23 +13,23 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        base-image: [10-buster, 12-buster, 14-buster]
+        base-image-tag: [10-buster, 12-buster, 14-buster]
     steps:
     - uses: actions/checkout@master
     - name: Test
       run: |
-        chmod +x runTests.sh && ./runTests.sh ${{ matrix.base-image }}
+        chmod +x runTests.sh && ./runTests.sh ${{ matrix.base-image-tag }}
     - name: Build
       run: |
-        echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USER }} --password-stdin
-        docker build --build-arg=BASE_IMAGE=node:${{ matrix.base-image }} --tag ppiper/node-browsers:${{ matrix.base-image }} .
-        if [ "${{ matrix.base-image }}" == 10-buster ]; then
-          docker tag ppiper/node-browsers:10-buster ppiper/node-browsers:latest
-        fi
+        docker build --build-arg=BASE_IMAGE=node:${{ matrix.base-image-tag }} --tag ppiper/node-browsers:${{ matrix.base-image-tag }} .
+    - name: Tag latest image
+      if: ${{ matrix.base-image-tag == 10-buster }}
+      run: docker tag ppiper/node-browsers:10-buster ppiper/node-browsers:latest
     - name: Push
       if: ${{ github.ref == 'ref/head/master' }}
       run: |
-        docker push ppiper/node-browsers:${{ matrix.base-image }}
-        if [ "${{ matrix.base-image }}" == 10-buster ]; then
+        echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USER }} --password-stdin
+        docker push ppiper/node-browsers:${{ matrix.base-image-tag }}
+        if [ "${{ matrix.base-image-tag }}" == 10-buster ]; then
           docker push ppiper/node-browsers:latest
         fi
