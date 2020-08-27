@@ -1,8 +1,0 @@
-branches:
-  only:
-  - master
-  - /^it\/.*$/
-language: minimal
-services:
-- docker
-script: chmod +x runTests.sh && ./runTests.sh . && ./runTests.sh node12

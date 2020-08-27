@@ -10,8 +10,14 @@ on:
 jobs:
   create-release:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        base-image-tag: [10-buster, 12-buster, 14-buster]
     steps:
       - uses: actions/checkout@v1
+      - name: Test
+        run: |
+          chmod +x runTests.sh && ./runTests.sh ${{ matrix.base-image-tag }}
       - name: Prepare Release
         run: |
           CURRENT_VERSION_LONG=$(curl --silent "https://api.github.com/repos/SAP/devops-docker-node-browsers/releases" | jq -r '.[].tag_name' | head -n1)
@@ -26,14 +32,16 @@ jobs:
           fi
           echo "::set-env name=PIPER_version::$NEXT_VERSION"
 
-      - name: Build, test and push
+      - name: Build and push
         run: |
           echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USER }} --password-stdin
-          docker build -t ppiper/node-browsers:${{ env.PIPER_version }} .
-          docker build -t ppiper/node-browsers:${{ env.PIPER_version }}-node12 node12
+          docker build --build-arg=BASE_IMAGE_TAG=${{ matrix.base-image-tag }} --tag ppiper/node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image-tag }} .
+          docker push ppiper/node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image-tag }}
+      - name: Tag and push node 10 image
+        if: ${{ matrix.base-image-tag == 10-buster }}
+        run: |
+          docker tag ppiper/node-browsers:10-buster ppiper/node-browsers:${{ env.PIPER_version }}
           docker push ppiper/node-browsers:${{ env.PIPER_version }}
-          docker push ppiper/node-browsers:${{ env.PIPER_version }}-node12
-
       - uses: SAP/project-piper-action@master
         with:
           piper-version: latest
