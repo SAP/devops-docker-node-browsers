@@ -43,6 +43,7 @@ jobs:
           docker tag ppiper/node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image-tag }} ppiper/node-browsers:${{ env.PIPER_version }}
           docker push ppiper/node-browsers:${{ env.PIPER_version }}
       - uses: SAP/project-piper-action@master
+        if: ${{ matrix.base-image-tag == '10-buster' }}
         with:
           piper-version: latest
           command: githubPublishRelease
