@@ -38,7 +38,7 @@ jobs:
           docker build --build-arg=BASE_IMAGE_TAG=${{ matrix.base-image-tag }} --tag ppiper/node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image-tag }} .
           docker push ppiper/node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image-tag }}
       - name: Tag and push node 10 image
-        if: ${{ matrix.base-image-tag == 10-buster }}
+        if: ${{ matrix.base-image-tag == '10-buster' }}
         run: |
           docker tag ppiper/node-browsers:10-buster ppiper/node-browsers:${{ env.PIPER_version }}
           docker push ppiper/node-browsers:${{ env.PIPER_version }}
