@@ -40,7 +40,7 @@ jobs:
       - name: Tag and push node 10 image
         if: ${{ matrix.base-image-tag == '10-buster' }}
         run: |
-          docker tag ppiper/node-browsers:10-buster ppiper/node-browsers:${{ env.PIPER_version }}
+          docker tag ppiper/node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image-tag }} ppiper/node-browsers:${{ env.PIPER_version }}
           docker push ppiper/node-browsers:${{ env.PIPER_version }}
       - uses: SAP/project-piper-action@master
         with:
