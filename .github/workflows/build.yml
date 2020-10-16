@@ -22,14 +22,20 @@ jobs:
     - name: Build
       run: |
         docker build --build-arg=BASE_IMAGE_TAG=${{ matrix.base-image-tag }} --tag ppiper/node-browsers:${{ matrix.base-image-tag }} .
+        docker tag ppiper/node-browsers:${{ matrix.base-image-tag }} ghcr.io/sap/ppiper-node-browsers:${{ matrix.base-image-tag }}
     - name: Tag latest image
       if: ${{ matrix.base-image-tag == '10-buster' }}
-      run: docker tag ppiper/node-browsers:${{ matrix.base-image-tag }} ppiper/node-browsers:latest
+      run: |
+        docker tag ppiper/node-browsers:${{ matrix.base-image-tag }} ppiper/node-browsers:latest
+        docker tag ghcr.io/sap/ppiper-node-browsers:${{ matrix.base-image-tag }} ghcr.io/sap/ppiper-node-browsers:latest
     - name: Push
       if: ${{ github.ref == 'ref/head/master' }}
       run: |
         echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USER }} --password-stdin
+        echo "${{ secrets.CR_PAT }}" | docker login https://ghcr.io -u ${{ secrets.CR_USER }} --password-stdin
         docker push ppiper/node-browsers:${{ matrix.base-image-tag }}
+        docker push ghcr.io/sap/ppiper-node-browsers:${{ matrix.base-image-tag }}
         if [ "${{ matrix.base-image-tag }}" == 10-buster ]; then
           docker push ppiper/node-browsers:latest
+          docker push ghcr.io/sap/ppiper-node-browsers:latest
         fi
