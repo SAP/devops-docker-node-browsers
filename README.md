@@ -1,5 +1,7 @@
 # Node Browsers Image
 
+[![REUSE status](https://api.reuse.software/badge/github.com/SAP/devops-docker-node-browsers)](https://api.reuse.software/info/github.com/SAP/devops-docker-node-browsers)
+
 This [_Dockerfile_](https://docs.docker.com/engine/reference/builder/) can be used in _Continuous Delivery_ (CD) pipelines for SAP development projects.
 The image is optimized for use with project ["Piper"](https://github.com/SAP/jenkins-library) on [Jenkins](https://jenkins.io/).
 Docker containers simplify your CD tool setup, encapsulating tools and environments that are required to execute pipeline steps.
@@ -43,3 +45,7 @@ The given tag **must** exist in the [node](https://hub.docker.com/_/node) base i
 ## Usage
 
 See this [blog post](https://blogs.sap.com/2017/12/11/sap-s4hana-cloud-sdk-end-to-end-tests-against-secured-applications/) for usage of this image in a Jenkins pipeline based on `ppiper/jenkins-master`.
+
+## Licensing
+
+Copyright 2017-2021 SAP SE or an SAP affiliate company and devops-docker-node-browsers contributors. Please see our [LICENSE](LICENSE) for copyright and license information. Detailed information including third-party components and their licensing/copyright information is available [via the REUSE tool](https://api.reuse.software/info/github.com/SAP/devops-docker-node-browsers).
