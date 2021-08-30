@@ -10,7 +10,7 @@ echo Testing version $TAG
 docker build --build-arg=BASE_IMAGE_TAG=${TAG} -t localhost:5000/ppiper/node-browsers:latest .
 docker push localhost:5000/ppiper/node-browsers:latest
 
-git clone https://github.com/piper-validation/cloud-s4-sdk-book.git -b validate-node-browsers test-project
+git clone https://github.com/piper-validation/cloud-s4-sdk-book.git -b validate-node-browsers-gpp test-project
 pushd test-project
 
 docker run -v //var/run/docker.sock:/var/run/docker.sock -v $(pwd):/workspace -v /tmp \
