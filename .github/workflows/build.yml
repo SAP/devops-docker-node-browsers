@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        base-image-tag: [10-buster, 12-buster, 14-buster]
+        base-image-tag: [10-buster, 12-buster, 14-buster, 16-buster]
     steps:
     - uses: actions/checkout@master
     - name: Test
