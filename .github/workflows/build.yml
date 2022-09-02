@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        base-image-tag: [10-buster, 12-buster, 14-buster, 16-buster]
+        base-image-tag: [12-buster, 14-buster, 16-buster, 12-bullseye, 14-bullseye, 16-bullseye, 18-bullseye]
     steps:
     - uses: actions/checkout@master
     - name: Test
@@ -24,7 +24,7 @@ jobs:
         docker build --build-arg=BASE_IMAGE_TAG=${{ matrix.base-image-tag }} --tag ppiper/node-browsers:${{ matrix.base-image-tag }} .
         docker tag ppiper/node-browsers:${{ matrix.base-image-tag }} ghcr.io/sap/ppiper-node-browsers:${{ matrix.base-image-tag }}
     - name: Tag latest image
-      if: ${{ matrix.base-image-tag == '10-buster' }}
+      if: ${{ matrix.base-image-tag == '18-bullseye' }}
       run: |
         docker tag ppiper/node-browsers:${{ matrix.base-image-tag }} ppiper/node-browsers:latest
         docker tag ghcr.io/sap/ppiper-node-browsers:${{ matrix.base-image-tag }} ghcr.io/sap/ppiper-node-browsers:latest
@@ -35,7 +35,7 @@ jobs:
         echo "${{ secrets.CR_PAT }}" | docker login https://ghcr.io -u ${{ secrets.CR_USER }} --password-stdin
         docker push ppiper/node-browsers:${{ matrix.base-image-tag }}
         docker push ghcr.io/sap/ppiper-node-browsers:${{ matrix.base-image-tag }}
-        if [ "${{ matrix.base-image-tag }}" == 10-buster ]; then
+        if [ "${{ matrix.base-image-tag }}" == 18-bullseye ]; then
           docker push ppiper/node-browsers:latest
           docker push ghcr.io/sap/ppiper-node-browsers:latest
         fi
