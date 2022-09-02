@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        base-image-tag: [10-buster, 12-buster, 14-buster, 16-buster]
+        base-image-tag: [12-buster, 14-buster, 16-buster, 12-bullseye, 14-bullseye, 16-bullseye, 18-bullseye]
     steps:
       - uses: actions/checkout@v1
       - name: Test
@@ -40,15 +40,15 @@ jobs:
           docker tag ppiper/node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image-tag }} ghcr.io/sap/ppiper-node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image-tag }}
           docker push ppiper/node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image-tag }}
           docker push ghcr.io/sap/ppiper-node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image-tag }}
-      - name: Tag and push node 10 image
-        if: ${{ matrix.base-image-tag == '10-buster' }}
+      - name: Tag and push node 18 image
+        if: ${{ matrix.base-image-tag == '18-bullseye' }}
         run: |
           docker tag ppiper/node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image-tag }} ppiper/node-browsers:${{ env.PIPER_version }}
           docker tag ghcr.io/sap/ppiper-node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image-tag }} ghcr.io/sap/ppiper-node-browsers:${{ env.PIPER_version }}
           docker push ppiper/node-browsers:${{ env.PIPER_version }}
           docker push ghcr.io/sap/ppiper-node-browsers:${{ env.PIPER_version }}
       - uses: SAP/project-piper-action@master
-        if: ${{ matrix.base-image-tag == '10-buster' }}
+        if: ${{ matrix.base-image-tag == '18-bullseye' }}
         with:
           piper-version: latest
           command: githubPublishRelease
