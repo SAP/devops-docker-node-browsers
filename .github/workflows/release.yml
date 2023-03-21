@@ -36,16 +36,16 @@ jobs:
         run: |
           echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USER }} --password-stdin
           echo "${{ secrets.CR_PAT }}" | docker login https://ghcr.io -u ${{ secrets.CR_USER }} --password-stdin
-          docker build --build-arg=BASE_IMAGE_TAG=${{ matrix.base-image-tag }} --tag ppiper/node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image-tag }} .
-          docker tag ppiper/node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image-tag }} ghcr.io/sap/ppiper-node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image-tag }}
-          docker push ppiper/node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image-tag }}
+          docker build --build-arg=BASE_IMAGE_TAG=${{ matrix.base-image-tag }} --tag sapcom/ppiper-node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image-tag }} .
+          docker tag sapcom/ppiper-node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image-tag }} ghcr.io/sap/ppiper-node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image-tag }}
+          docker push sapcom/ppiper-node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image-tag }}
           docker push ghcr.io/sap/ppiper-node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image-tag }}
       - name: Tag and push node 18 image
         if: ${{ matrix.base-image-tag == '18-bullseye' }}
         run: |
-          docker tag ppiper/node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image-tag }} ppiper/node-browsers:${{ env.PIPER_version }}
+          docker tag sapcom/ppiper-node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image-tag }} sapcom/ppiper-node-browsers:${{ env.PIPER_version }}
           docker tag ghcr.io/sap/ppiper-node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image-tag }} ghcr.io/sap/ppiper-node-browsers:${{ env.PIPER_version }}
-          docker push ppiper/node-browsers:${{ env.PIPER_version }}
+          docker push sapcom/ppiper-node-browsers:${{ env.PIPER_version }}
           docker push ghcr.io/sap/ppiper-node-browsers:${{ env.PIPER_version }}
       - uses: SAP/project-piper-action@master
         if: ${{ matrix.base-image-tag == '18-bullseye' }}
