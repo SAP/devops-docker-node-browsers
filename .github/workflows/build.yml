@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        base-image-tag: [12-buster, 14-buster, 16-buster, 12-bullseye, 14-bullseye, 16-bullseye, 18-bullseye]
+        base-image-tag: [14-buster, 16-buster, 14-bullseye, 16-bullseye, 18-bullseye]
     steps:
     - uses: actions/checkout@master
     - name: Test
