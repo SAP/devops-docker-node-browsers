@@ -19,9 +19,9 @@ jobs:
         id: java_version
         run: |
           if [[ "${{ matrix.base-image-tag }}" == *"-buster" ]] || [[ "${{ matrix.base-image-tag }}" == *"-bullseye" ]]; then
-            echo "::set-output name=version::11"
+            echo 'version=11' >> $GITHUB_OUTPUT
           else
-            echo "::set-output name=version::17"
+            echo 'version=17' >> $GITHUB_OUTPUT
           fi
       - name: Test
         run: |
