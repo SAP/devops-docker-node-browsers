@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        base-image-tag: [16-buster, 16-bullseye, 18-bullseye]
+        base-image-tag: [16-buster, 16-bullseye, 18-bullseye, 16-bookworm, 18-bookworm, 20-bookworm]
     steps:
       - uses: actions/checkout@v1
       - name: Test
