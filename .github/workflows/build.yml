@@ -17,13 +17,13 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: Determine Java version
-        id: java_version
-        run: |
-          if [[ "${{ matrix.base-image-tag }}" == *"-buster" ]] || [[ "${{ matrix.base-image-tag }}" == *"-bullseye" ]]; then
-            echo "::set-output name=version::11"
-          else
-            echo "::set-output name=version::17"
-          fi
+      id: java_version
+      run: |
+        if [[ "${{ matrix.base-image-tag }}" == *"-buster" ]] || [[ "${{ matrix.base-image-tag }}" == *"-bullseye" ]]; then
+          echo "::set-output name=version::11"
+        else
+          echo "::set-output name=version::17"
+        fi
     - name: Test
       run: |
         chmod +x runTests.sh && ./runTests.sh ${{ matrix.base-image-tag }} ${{ steps.java_version.outputs.version }}
