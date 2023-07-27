@@ -15,9 +15,17 @@ jobs:
         base-image-tag: [16-buster, 16-bullseye, 18-bullseye, 16-bookworm, 18-bookworm, 20-bookworm]
     steps:
       - uses: actions/checkout@v1
+      - name: Determine Java version
+        id: java_version
+        run: |
+          if [[ "${{ matrix.base-image-tag }}" == *"-buster" ]] || [[ "${{ matrix.base-image-tag }}" == *"-bullseye" ]]; then
+            echo "::set-output name=version::11"
+          else
+            echo "::set-output name=version::17"
+          fi
       - name: Test
         run: |
-          chmod +x runTests.sh && ./runTests.sh ${{ matrix.base-image-tag }}
+          chmod +x runTests.sh && ./runTests.sh ${{ matrix.base-image-tag }} ${{ steps.java_version.outputs.version }}
       - name: Prepare Release
         run: |
           CURRENT_VERSION_LONG=$(curl --silent "https://api.github.com/repos/SAP/devops-docker-node-browsers/releases" | jq -r '.[].tag_name' | head -n1)
@@ -36,19 +44,19 @@ jobs:
         run: |
           echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USER }} --password-stdin
           echo "${{ secrets.CR_PAT }}" | docker login https://ghcr.io -u ${{ secrets.CR_USER }} --password-stdin
-          docker build --build-arg=BASE_IMAGE_TAG=${{ matrix.base-image-tag }} --tag ppiper/node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image-tag }} .
+          docker build --build-arg=BASE_IMAGE_TAG=${{ matrix.base-image-tag }} --build-arg=JAVA_VERSION=${{ steps.java_version.outputs.version }} --tag ppiper/node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image-tag }} .
           docker tag ppiper/node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image-tag }} ghcr.io/sap/ppiper-node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image-tag }}
           docker push ppiper/node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image-tag }}
           docker push ghcr.io/sap/ppiper-node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image-tag }}
-      - name: Tag and push node 18 image
-        if: ${{ matrix.base-image-tag == '18-bullseye' }}
+      - name: Tag and push node 20 image
+        if: ${{ matrix.base-image-tag == '20-bookworm' }}
         run: |
           docker tag ppiper/node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image-tag }} ppiper/node-browsers:${{ env.PIPER_version }}
           docker tag ghcr.io/sap/ppiper-node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image-tag }} ghcr.io/sap/ppiper-node-browsers:${{ env.PIPER_version }}
           docker push ppiper/node-browsers:${{ env.PIPER_version }}
           docker push ghcr.io/sap/ppiper-node-browsers:${{ env.PIPER_version }}
       - uses: SAP/project-piper-action@master
-        if: ${{ matrix.base-image-tag == '18-bullseye' }}
+        if: ${{ matrix.base-image-tag == '20-bookworm' }}
         with:
           piper-version: latest
           command: githubPublishRelease
