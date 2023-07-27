@@ -13,18 +13,26 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        base-image-tag: [16-buster, 16-bullseye, 18-bullseye]
+        base-image-tag: [16-buster, 16-bullseye, 18-bullseye, 16-bookworm, 18-bookworm, 20-bookworm]
     steps:
     - uses: actions/checkout@master
+    - name: Determine Java version
+        id: java_version
+        run: |
+          if [[ "${{ matrix.base-image-tag }}" == *"-buster" ]] || [[ "${{ matrix.base-image-tag }}" == *"-bullseye" ]]; then
+            echo "::set-output name=version::11"
+          else
+            echo "::set-output name=version::17"
+          fi
     - name: Test
       run: |
-        chmod +x runTests.sh && ./runTests.sh ${{ matrix.base-image-tag }}
+        chmod +x runTests.sh && ./runTests.sh ${{ matrix.base-image-tag }} ${{ steps.java_version.outputs.version }}
     - name: Build
       run: |
-        docker build --build-arg=BASE_IMAGE_TAG=${{ matrix.base-image-tag }} --tag ppiper/node-browsers:${{ matrix.base-image-tag }} .
+        docker build --build-arg=BASE_IMAGE_TAG=${{ matrix.base-image-tag }} --build-arg=JAVA_VERSION=${{ steps.java_version.outputs.version }} --tag ppiper/node-browsers:${{ matrix.base-image-tag }} .
         docker tag ppiper/node-browsers:${{ matrix.base-image-tag }} ghcr.io/sap/ppiper-node-browsers:${{ matrix.base-image-tag }}
     - name: Tag latest image
-      if: ${{ matrix.base-image-tag == '18-bullseye' }}
+      if: ${{ matrix.base-image-tag == '20-bookworm' }}
       run: |
         docker tag ppiper/node-browsers:${{ matrix.base-image-tag }} ppiper/node-browsers:latest
         docker tag ghcr.io/sap/ppiper-node-browsers:${{ matrix.base-image-tag }} ghcr.io/sap/ppiper-node-browsers:latest
@@ -35,7 +43,7 @@ jobs:
         echo "${{ secrets.CR_PAT }}" | docker login https://ghcr.io -u ${{ secrets.CR_USER }} --password-stdin
         docker push ppiper/node-browsers:${{ matrix.base-image-tag }}
         docker push ghcr.io/sap/ppiper-node-browsers:${{ matrix.base-image-tag }}
-        if [ "${{ matrix.base-image-tag }}" == 18-bullseye ]; then
+        if [ "${{ matrix.base-image-tag }}" == 20-bookworm ]; then
           docker push ppiper/node-browsers:latest
           docker push ghcr.io/sap/ppiper-node-browsers:latest
         fi
