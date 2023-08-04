@@ -22,13 +22,13 @@ This image is published to Docker Hub and can be pulled via the command
 docker pull ppiper/node-browsers
 ```
 
-The default tag `latest` contains node 10 for compatibility reasons with approuter, which is a Maintenance LTS and will be end of life after 2021-04-30.
+The default tag `latest` contains node 20
 
-For node-12 or node-14, use the tag `12-buster` or `14-buster`:
+For node-16 or node-18 use the tag `16-bookworm` or `18-bookworm`:
 
 ```
-docker pull ppiper/node-browsers:12-buster
-docker pull ppiper/node-browsers:14-buster
+docker pull ppiper/node-browsers:16-bookworm
+docker pull ppiper/node-browsers:18-bookworm
 ```
 
 ## Build
@@ -36,10 +36,10 @@ docker pull ppiper/node-browsers:14-buster
 To build this image locally, open a terminal in the directory of the Dockerfile and run
 
 ```
-docker build --build-arg=BASE_IMAGE_TAG=10-buster -t ppiper/node-browsers .
+docker build --build-arg=BASE_IMAGE_TAG=20-bookworm -t ppiper/node-browsers .
 ```
 
-Where the `BASE_IMAGE_TAG=10-buster` build argument can be replaced with `BASE_IMAGE_TAG=12-buster` or `BASE_IMAGE_TAG=14-buster`.
+Where the `BASE_IMAGE_TAG=20-bookworm` build argument can be replaced with `BASE_IMAGE_TAG=16-bookworm` or `BASE_IMAGE_TAG=18-bookworm`.
 The given tag **must** exist in the [node](https://hub.docker.com/_/node) base image **and** use Debian GNU/Linux.
 
 ## Usage
