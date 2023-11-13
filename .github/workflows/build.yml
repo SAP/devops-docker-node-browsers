@@ -19,7 +19,7 @@ jobs:
     - name: Determine Java version
       id: java_version
       run: |
-        if [[ "${{ matrix.base-image-tag }}" == *"-bookwarm" ]] || [[ "${{ matrix.base-image-tag }}" == *"-bullseye" ]]; then
+        if [[ "${{ matrix.base-image-tag }}" == *"-bullseye" ]] || [[ "${{ matrix.base-image-tag }}" == *"-bookworm" ]]; then
           echo 'version=11' >> $GITHUB_OUTPUT
         else
           echo 'version=17' >> $GITHUB_OUTPUT
