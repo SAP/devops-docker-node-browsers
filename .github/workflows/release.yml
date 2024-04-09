@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        base-image-tag: [16-bullseye, 18-bullseye, 16-bookworm, 18-bookworm, 20-bookworm]
+        base-image-tag: [16-bullseye, 18-bullseye, 16-bookworm, 18-bookworm, 20-bookworm, 18-bookworm-java21, 20-bookworm-java21]
     steps:
       - uses: actions/checkout@v3
       - name: Determine Java version
@@ -20,6 +20,8 @@ jobs:
         run: |
           if [[ "${{ matrix.base-image-tag }}" == *"-bullseye" ]]; then
             echo 'version=11' >> $GITHUB_OUTPUT
+          elif [[ "${{ matrix.base-image-tag }}" == *"-java21" ]]; then
+            echo 'version=21' >> $GITHUB_OUTPUT
           else
             echo 'version=17' >> $GITHUB_OUTPUT
           fi
