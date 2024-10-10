@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        base-image-tag: [16-bullseye, 18-bullseye, 16-bookworm, 18-bookworm, 20-bookworm]
+        base-image-tag: [18-bullseye, 18-bookworm, 20-bookworm, 22-bookworm]
     steps:
     - uses: actions/checkout@master
     - name: Determine Java version
@@ -32,7 +32,7 @@ jobs:
         docker build --build-arg=BASE_IMAGE_TAG=${{ matrix.base-image-tag }} --build-arg=JAVA_VERSION=${{ steps.java_version.outputs.version }} --tag ppiper/node-browsers:${{ matrix.base-image-tag }} .
         docker tag ppiper/node-browsers:${{ matrix.base-image-tag }} ghcr.io/sap/ppiper-node-browsers:${{ matrix.base-image-tag }}
     - name: Tag latest image
-      if: ${{ matrix.base-image-tag == '20-bookworm' }}
+      if: ${{ matrix.base-image-tag == '22-bookworm' }}
       run: |
         docker tag ppiper/node-browsers:${{ matrix.base-image-tag }} ppiper/node-browsers:latest
         docker tag ghcr.io/sap/ppiper-node-browsers:${{ matrix.base-image-tag }} ghcr.io/sap/ppiper-node-browsers:latest
@@ -43,7 +43,7 @@ jobs:
         echo "${{ secrets.CR_PAT }}" | docker login https://ghcr.io -u ${{ secrets.CR_USER }} --password-stdin
         docker push ppiper/node-browsers:${{ matrix.base-image-tag }}
         docker push ghcr.io/sap/ppiper-node-browsers:${{ matrix.base-image-tag }}
-        if [ "${{ matrix.base-image-tag }}" == 20-bookworm ]; then
+        if [ "${{ matrix.base-image-tag }}" == 22-bookworm ]; then
           docker push ppiper/node-browsers:latest
           docker push ghcr.io/sap/ppiper-node-browsers:latest
         fi
