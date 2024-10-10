@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        base-image-tag: [16-bullseye, 18-bullseye, 16-bookworm, 18-bookworm, 20-bookworm]
+        base-image-tag: [18-bullseye, 18-bookworm, 20-bookworm, 22-bookworm]
     steps:
       - uses: actions/checkout@v3
       - name: Determine Java version
@@ -48,15 +48,15 @@ jobs:
           docker tag ppiper/node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image-tag }} ghcr.io/sap/ppiper-node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image-tag }}
           docker push ppiper/node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image-tag }}
           docker push ghcr.io/sap/ppiper-node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image-tag }}
-      - name: Tag and push node 20 image
-        if: ${{ matrix.base-image-tag == '20-bookworm' }}
+      - name: Tag and push node 22 image
+        if: ${{ matrix.base-image-tag == '22-bookworm' }}
         run: |
           docker tag ppiper/node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image-tag }} ppiper/node-browsers:${{ env.PIPER_version }}
           docker tag ghcr.io/sap/ppiper-node-browsers:${{ env.PIPER_version }}-${{ matrix.base-image-tag }} ghcr.io/sap/ppiper-node-browsers:${{ env.PIPER_version }}
           docker push ppiper/node-browsers:${{ env.PIPER_version }}
           docker push ghcr.io/sap/ppiper-node-browsers:${{ env.PIPER_version }}
       - uses: SAP/project-piper-action@master
-        if: ${{ matrix.base-image-tag == '20-bookworm' }}
+        if: ${{ matrix.base-image-tag == '22-bookworm' }}
         with:
           piper-version: latest
           command: githubPublishRelease
