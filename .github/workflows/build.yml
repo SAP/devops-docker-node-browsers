@@ -13,17 +13,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        base-image-tag: [18-bullseye, 18-bookworm, 20-bookworm, 22-bookworm]
+        base-image-tag: [20-bookworm, 22-bookworm]
     steps:
     - uses: actions/checkout@master
     - name: Determine Java version
       id: java_version
       run: |
-        if [[ "${{ matrix.base-image-tag }}" == *"-bullseye" ]]; then
-          echo 'version=11' >> $GITHUB_OUTPUT
-        else
-          echo 'version=17' >> $GITHUB_OUTPUT
-        fi
+        echo 'version=17' >> $GITHUB_OUTPUT
     - name: Test
       run: |
         chmod +x runTests.sh && ./runTests.sh ${{ matrix.base-image-tag }} ${{ steps.java_version.outputs.version }}
