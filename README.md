@@ -2,6 +2,8 @@
 
 [![REUSE status](https://api.reuse.software/badge/github.com/SAP/devops-docker-node-browsers)](https://api.reuse.software/info/github.com/SAP/devops-docker-node-browsers)
 
+> **⚠️ Important Notice:** The GitHub Container Registry (ghcr.io) for this project is no longer being updated. Please use the Docker Hub registry instead: `docker pull ppiper/node-browsers`
+
 This [_Dockerfile_](https://docs.docker.com/engine/reference/builder/) can be used in _Continuous Delivery_ (CD) pipelines for SAP development projects.
 The image is optimized for use with project ["Piper"](https://github.com/SAP/jenkins-library) on [Jenkins](https://jenkins.io/).
 Docker containers simplify your CD tool setup, encapsulating tools and environments that are required to execute pipeline steps.
