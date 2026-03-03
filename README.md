@@ -24,13 +24,14 @@ This image is published to Docker Hub and can be pulled via the command
 docker pull ppiper/node-browsers
 ```
 
-The default tag `latest` contains node 20
+The default tag `latest` contains Node 24.
 
-For node-16 or node-18 use the tag `16-bookworm` or `18-bookworm`:
+For specific Node versions, use the following tags:
 
 ```
-docker pull ppiper/node-browsers:16-bookworm
-docker pull ppiper/node-browsers:18-bookworm
+docker pull ppiper/node-browsers:20-bookworm
+docker pull ppiper/node-browsers:22-bookworm
+docker pull ppiper/node-browsers:24-bookworm
 ```
 
 ## Build
@@ -38,10 +39,10 @@ docker pull ppiper/node-browsers:18-bookworm
 To build this image locally, open a terminal in the directory of the Dockerfile and run
 
 ```
-docker build --build-arg=BASE_IMAGE_TAG=20-bookworm -t ppiper/node-browsers .
+docker build --build-arg=BASE_IMAGE_TAG=24-bookworm -t ppiper/node-browsers .
 ```
 
-Where the `BASE_IMAGE_TAG=20-bookworm` build argument can be replaced with `BASE_IMAGE_TAG=16-bookworm` or `BASE_IMAGE_TAG=18-bookworm`.
+Where the `BASE_IMAGE_TAG` can be set to `20-bookworm`, `22-bookworm`, or `24-bookworm`.
 The given tag **must** exist in the [node](https://hub.docker.com/_/node) base image **and** use Debian GNU/Linux.
 
 ## Usage
