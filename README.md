@@ -35,6 +35,8 @@ docker pull ppiper/node-browsers:24-bookworm
 docker pull ppiper/node-browsers:26-trixie
 ```
 
+> **⚠️ Note:** The `26-trixie` image is based on Debian Trixie (13) which ships Java 21 by default instead of Java 17 (Bookworm). Please ensure your project is compatible with Java 21.
+
 ## Build
 
 To build this image locally, open a terminal in the directory of the Dockerfile and run
