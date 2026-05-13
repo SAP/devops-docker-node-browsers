@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        base-image-tag: [20-bookworm, 22-bookworm, 24-bookworm]
+        base-image-tag: [22-bookworm, 24-bookworm]
     steps:
     - uses: actions/checkout@master
     - name: Test
