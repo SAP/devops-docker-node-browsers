@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        base-image-tag: [22-bookworm, 24-bookworm, 26-trixie]
+        base-image-tag: [22-bookworm, 22-trixie, 24-bookworm, 24-trixie, 26-trixie]
     steps:
       - uses: actions/checkout@v3
       - name: Test
