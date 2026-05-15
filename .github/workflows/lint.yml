@@ -1,5 +1,9 @@
 on: push
 name: Lint all Dockerfiles
+
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
