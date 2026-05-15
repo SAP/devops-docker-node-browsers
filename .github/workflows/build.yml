@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-matrix:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -41,3 +41,9 @@ jobs:
         if [ "${{ matrix.base-image-tag }}" == 24-bookworm ]; then
           docker push ppiper/node-browsers:latest
         fi
+
+  build:
+    runs-on: ubuntu-latest
+    needs: build-matrix
+    steps:
+      - run: echo "All builds completed successfully"
