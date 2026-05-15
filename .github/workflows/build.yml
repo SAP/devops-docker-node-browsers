@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        base-image-tag: [22-bookworm, 24-bookworm]
+        base-image-tag: [22-bookworm, 24-bookworm, 26-trixie]
     steps:
     - uses: actions/checkout@master
     - name: Test
@@ -26,7 +26,7 @@ jobs:
       run: |
         docker build --build-arg=BASE_IMAGE_TAG=${{ matrix.base-image-tag }} --tag ppiper/node-browsers:${{ matrix.base-image-tag }} .
     - name: Tag latest image
-      if: ${{ matrix.base-image-tag == '24-bookworm' }}
+      if: ${{ matrix.base-image-tag == '26-trixie' }}
       run: |
         docker tag ppiper/node-browsers:${{ matrix.base-image-tag }} ppiper/node-browsers:latest
     - name: Push
@@ -34,6 +34,6 @@ jobs:
       run: |
         echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USER }} --password-stdin
         docker push ppiper/node-browsers:${{ matrix.base-image-tag }}
-        if [ "${{ matrix.base-image-tag }}" == 24-bookworm ]; then
+        if [ "${{ matrix.base-image-tag }}" == 26-trixie ]; then
           docker push ppiper/node-browsers:latest
         fi
