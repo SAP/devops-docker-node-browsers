@@ -24,7 +24,7 @@ This image is published to Docker Hub and can be pulled via the command
 docker pull ppiper/node-browsers
 ```
 
-The default tag `latest` contains Node 24.
+The default tag `latest` contains Node 26.
 
 For specific Node versions, use the following tags:
 
@@ -32,17 +32,20 @@ For specific Node versions, use the following tags:
 docker pull ppiper/node-browsers:20-bookworm
 docker pull ppiper/node-browsers:22-bookworm
 docker pull ppiper/node-browsers:24-bookworm
+docker pull ppiper/node-browsers:26-trixie
 ```
+
+> **⚠️ Note:** The `26-trixie` image is based on Debian Trixie (13) which ships Java 21 by default instead of Java 17 (Bookworm). Please ensure your project is compatible with Java 21.
 
 ## Build
 
 To build this image locally, open a terminal in the directory of the Dockerfile and run
 
 ```
-docker build --build-arg=BASE_IMAGE_TAG=24-bookworm -t ppiper/node-browsers .
+docker build --build-arg=BASE_IMAGE_TAG=26-trixie -t ppiper/node-browsers .
 ```
 
-Where the `BASE_IMAGE_TAG` can be set to `20-bookworm`, `22-bookworm`, or `24-bookworm`.
+Where the `BASE_IMAGE_TAG` can be set to `20-bookworm`, `22-bookworm`, `24-bookworm`, or `26-trixie`.
 The given tag **must** exist in the [node](https://hub.docker.com/_/node) base image **and** use Debian GNU/Linux.
 
 ## Usage
